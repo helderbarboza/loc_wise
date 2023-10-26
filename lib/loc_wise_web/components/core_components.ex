@@ -636,14 +636,20 @@ defmodule LocWiseWeb.CoreComponents do
 
   def list(assigns) do
     ~H"""
-    <div class="mt-14">
-      <dl class="-my-4 divide-y divide-zinc-100">
-        <div :for={item <- @item} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
-          <dt class="w-1/4 flex-none text-zinc-500"><%= item.title %></dt>
-          <dd class="text-zinc-700"><%= render_slot(item) %></dd>
-        </div>
-      </dl>
-    </div>
+    <dl class="mt-14 max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
+      <div
+        :for={{item, i} <- Enum.with_index(@item, 1)}
+        class={[
+          "flex flex-col",
+          i == 1 && "pb-3",
+          i > 1 and i < length(@item) && "py-3",
+          i == length(@item) && "pt-3"
+        ]}
+      >
+        <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400"><%= item.title %></dt>
+        <dd class="text-lg font-semibold"><%= render_slot(item) %></dd>
+      </div>
+    </dl>
     """
   end
 
