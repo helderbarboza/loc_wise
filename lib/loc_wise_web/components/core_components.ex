@@ -316,7 +316,14 @@ defmodule LocWiseWeb.CoreComponents do
       <select
         id={@id}
         name={@name}
-        class="mt-1 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
+        class={[
+          "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ",
+          "focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700",
+          "dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
+          "dark:focus:ring-blue-500 dark:focus:border-blue-500",
+          @errors != [] &&
+            "bg-red-50 border-red-500 focus:border-red-500 text-red-900 focus:ring-red-500 dark:bg-red-100 dark:border-red-400"
+        ]}
         multiple={@multiple}
         {@rest}
       >
@@ -359,10 +366,10 @@ defmodule LocWiseWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
-          "phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
-          "border-zinc-300 focus:border-zinc-400",
-          @errors != [] && "border-rose-400 focus:border-rose-400"
+          "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+          "phx-no-feedback:border-gray-300 phx-no-feedback:focus:border-blue-500",
+          @errors != [] &&
+            "bg-red-50 border-red-500 focus:border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 dark:bg-red-100 dark:border-red-400"
         ]}
         {@rest}
       />
@@ -379,7 +386,7 @@ defmodule LocWiseWeb.CoreComponents do
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class="block text-sm font-semibold leading-6 text-zinc-800">
+    <label for={@for} class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
       <%= render_slot(@inner_block) %>
     </label>
     """
@@ -392,10 +399,10 @@ defmodule LocWiseWeb.CoreComponents do
 
   def error(assigns) do
     ~H"""
-    <p class="mt-3 flex gap-3 text-sm leading-6 text-rose-600 phx-no-feedback:hidden">
-      <.icon name="exclamation-circle" class="mt-0.5 h-5 w-5 flex-none" />
+    <div class="mt-2 flex items-center gap-2 text-sm leading-6 text-red-600 dark:text-red-500 phx-no-feedback:hidden">
+      <.icon name="exclamation-circle" class="h-4 w-4 flex-none" />
       <%= render_slot(@inner_block) %>
-    </p>
+    </div>
     """
   end
 
