@@ -8,7 +8,12 @@
 </.header>
 
 <.list>
-  <:item title="State"><%= @city.state.name %></:item>
+  <:item title="State">
+    <.link navigate={~p"/states/#{@city.state}"} class="flex items-center hover:text-primary-700">
+      <%= @city.state.name %>
+      <.icon name="external-link" class="w-3.5 h-3.5 ml-1.5" />
+    </.link>
+  </:item>
 </.list>
 
 <.back navigate={~p"/cities"}>Back to cities</.back>
