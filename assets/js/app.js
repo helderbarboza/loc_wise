@@ -22,7 +22,9 @@ import { Socket } from "phoenix"
 import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 // Flowbite
-import "flowbite/dist/flowbite.phoenix.js";
+import "flowbite/dist/flowbite.phoenix.js"
+// Iconify-icon
+import "iconify-icon"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken } })
