@@ -17,12 +17,14 @@ defmodule LocWiseWeb.CityLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit City")
+    |> assign(:states_options, Locations.list_states_options())
     |> assign(:city, Locations.get_city!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New City")
+    |> assign(:states_options, Locations.list_states_options())
     |> assign(:city, %City{})
   end
 

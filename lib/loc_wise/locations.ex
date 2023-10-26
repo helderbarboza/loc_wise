@@ -22,6 +22,19 @@ defmodule LocWise.Locations do
   end
 
   @doc """
+  Returns the list of states as options to be used on inputs.
+
+  ## Examples
+
+      iex> list_states_options()
+      [{"Bahia", 1}, {"Ceará", 2}, ...]
+
+  """
+  def list_states_options do
+    Repo.all(from s in State, select: {s.name, s.id})
+  end
+
+  @doc """
   Gets a single state.
 
   Raises `Ecto.NoResultsError` if the State does not exist.

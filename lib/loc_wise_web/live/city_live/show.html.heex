@@ -14,13 +14,19 @@
 
 <.back navigate={~p"/cities"}>Back to cities</.back>
 
-<.modal :if={@live_action == :edit} id="city-modal" show on_cancel={JS.patch(~p"/cities/#{@city}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="city-modal"
+  show
+  on_cancel={JS.patch(~p"/cities/#{@city}")}
+>
   <.live_component
     module={LocWiseWeb.CityLive.FormComponent}
     id={@city.id}
     title={@page_title}
     action={@live_action}
     city={@city}
+    states_options={@states_options}
     patch={~p"/cities/#{@city}"}
   />
 </.modal>
