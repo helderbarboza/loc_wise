@@ -481,6 +481,7 @@ defmodule LocWiseWeb.CoreComponents do
               class={[
                 (i == 0 && "px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white") ||
                   "px-4 py-3",
+                "w-full",
                 @row_click && "hover:cursor-pointer"
               ]}
               {%{scope: (i == 0 && "row") || false}}

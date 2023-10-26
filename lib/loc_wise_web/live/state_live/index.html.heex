@@ -17,17 +17,17 @@
   <:col :let={{_id, state}} label="Region"><%= state.region %></:col>
   <:action :let={{_id, state}}>
     <div class="sr-only">
-      <.link navigate={~p"/states/#{state}"}>Show</.link>
+      <.icon_button_link title="Show" icon_name="table" navigate={~p"/states/#{state}"} />
     </div>
-    <.link patch={~p"/states/#{state}/edit"}>Edit</.link>
+    <.icon_button_link title="Edit" icon_name="edit" patch={~p"/states/#{state}/edit"} />
   </:action>
   <:action :let={{id, state}}>
-    <.link
+    <.icon_button_link
+      title="Delete"
+      icon_name="trash"
       phx-click={JS.push("delete", value: %{id: state.id}) |> hide("##{id}")}
       data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
+    />
   </:action>
 </.table>
 
