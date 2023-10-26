@@ -7,7 +7,7 @@
   </:actions>
 </.header>
 
-<.table
+<.special_table
   id="cities"
   rows={@streams.cities}
   row_click={fn {_id, city} -> JS.navigate(~p"/cities/#{city}") end}
@@ -28,7 +28,7 @@
       data-confirm="Are you sure?"
     />
   </:action>
-</.table>
+</.special_table>
 
 <.modal :if={@live_action in [:new, :edit]} id="city-modal" show on_cancel={JS.patch(~p"/cities")}>
   <.live_component
