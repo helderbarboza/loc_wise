@@ -19,4 +19,18 @@ defmodule LocWise.LocationsFixtures do
 
     state
   end
+
+  @doc """
+  Generate a city.
+  """
+  def city_fixture(attrs \\ %{}) do
+    {:ok, city} =
+      attrs
+      |> Enum.into(%{
+        name: "some name"
+      })
+      |> LocWise.Locations.create_city()
+
+    city
+  end
 end
