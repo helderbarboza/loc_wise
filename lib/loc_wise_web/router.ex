@@ -18,6 +18,13 @@ defmodule LocWiseWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    live "/states", StateLive.Index, :index
+    live "/states/new", StateLive.Index, :new
+    live "/states/:id/edit", StateLive.Index, :edit
+
+    live "/states/:id", StateLive.Show, :show
+    live "/states/:id/show/edit", StateLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
