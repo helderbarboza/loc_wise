@@ -1,6 +1,5 @@
 <.header>
-  City <%= @city.id %>
-  <:subtitle>This is a city record from your database.</:subtitle>
+  <%= @city.name %>
   <:actions>
     <.link patch={~p"/cities/#{@city}/show/edit"} phx-click={JS.push_focus()}>
       <.button>Edit city</.button>

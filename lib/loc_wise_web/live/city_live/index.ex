@@ -1,6 +1,8 @@
 defmodule LocWiseWeb.CityLive.Index do
   use LocWiseWeb, :live_view
 
+  import LocWiseWeb.Link
+
   alias LocWise.Locations
   alias LocWise.Locations.City
 

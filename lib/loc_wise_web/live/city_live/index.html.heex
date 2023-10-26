@@ -1,5 +1,5 @@
 <.header>
-  Listing Cities
+  Cities
   <:actions>
     <.link patch={~p"/cities/new"}>
       <.button>New City</.button>
@@ -16,17 +16,17 @@
   <:col :let={{_id, city}} label="State"><%= city.state.name %></:col>
   <:action :let={{_id, city}}>
     <div class="sr-only">
-      <.link navigate={~p"/cities/#{city}"}>Show</.link>
+      <.icon_button_link title="Show" icon_name="table" navigate={~p"/cities/#{city}"} />
     </div>
-    <.link patch={~p"/cities/#{city}/edit"}>Edit</.link>
+    <.icon_button_link title="Edit" icon_name="edit" patch={~p"/cities/#{city}/edit"} />
   </:action>
   <:action :let={{id, city}}>
-    <.link
+    <.icon_button_link
+      title="Delete"
+      icon_name="trash"
       phx-click={JS.push("delete", value: %{id: city.id}) |> hide("##{id}")}
       data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
+    />
   </:action>
 </.table>
 
