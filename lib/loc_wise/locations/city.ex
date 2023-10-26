@@ -1,10 +1,11 @@
 defmodule LocWise.Locations.City do
   use Ecto.Schema
   import Ecto.Changeset
+  alias LocWise.Locations.State
 
   schema "cities" do
     field :name, :string
-    field :state, :id
+    belongs_to :state, State
 
     timestamps()
   end
@@ -12,7 +13,8 @@ defmodule LocWise.Locations.City do
   @doc false
   def changeset(city, attrs) do
     city
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :state_id])
+    |> validate_required([:name, :state_id])
+    |> foreign_key_constraint(:state_id)
   end
 end
