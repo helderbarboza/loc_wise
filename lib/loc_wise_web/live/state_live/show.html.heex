@@ -9,7 +9,7 @@
 
 <.list>
   <:item title="Acronym"><%= @state.acronym %></:item>
-  <:item title="Region"><%= @state.region %></:item>
+  <:item title="Region"><%= Phoenix.Naming.humanize(@state.region) %></:item>
 </.list>
 
 <.back navigate={~p"/states"}>Back to states</.back>
