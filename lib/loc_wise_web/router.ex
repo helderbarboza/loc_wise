@@ -25,6 +25,13 @@ defmodule LocWiseWeb.Router do
 
     live "/states/:id", StateLive.Show, :show
     live "/states/:id/show/edit", StateLive.Show, :edit
+
+    live "/cities", CityLive.Index, :index
+    live "/cities/new", CityLive.Index, :new
+    live "/cities/:id/edit", CityLive.Index, :edit
+
+    live "/cities/:id", CityLive.Show, :show
+    live "/cities/:id/show/edit", CityLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
