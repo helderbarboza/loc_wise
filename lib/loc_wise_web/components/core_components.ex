@@ -75,7 +75,7 @@ defmodule LocWiseWeb.CoreComponents do
                   class="-m-3 flex-none p-3 opacity-20 hover:opacity-40"
                   aria-label={gettext("close")}
                 >
-                  <.icon name="hero-x-mark-solid" class="h-5 w-5" />
+                  <.icon name="x" class="h-5 w-5" />
                 </button>
               </div>
               <div id={"#{@id}-content"}>
@@ -99,7 +99,6 @@ defmodule LocWiseWeb.CoreComponents do
   """
   attr :id, :string, default: "flash", doc: "the optional id of flash container"
   attr :flash, :map, default: %{}, doc: "the map of flash messages to display"
-  attr :title, :string, default: nil
   attr :kind, :atom, values: [:info, :error], doc: "used for styling and flash lookup"
   attr :rest, :global, doc: "the arbitrary HTML attributes to add to the flash container"
 
@@ -112,22 +111,37 @@ defmodule LocWiseWeb.CoreComponents do
       id={@id}
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")}
       role="alert"
-      class={[
-        "fixed top-2 right-2 w-80 sm:w-96 z-50 rounded-lg p-3 ring-1",
-        @kind == :info && "bg-emerald-50 text-emerald-800 ring-emerald-500 fill-cyan-900",
-        @kind == :error && "bg-rose-50 text-rose-900 shadow-md ring-rose-500 fill-rose-900"
-      ]}
+      class="fixed top-2 right-5 z-50 w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
       {@rest}
     >
-      <p :if={@title} class="flex items-center gap-1.5 text-sm font-semibold leading-6">
-        <.icon :if={@kind == :info} name="hero-information-circle-mini" class="h-4 w-4" />
-        <.icon :if={@kind == :error} name="hero-exclamation-circle-mini" class="h-4 w-4" />
-        <%= @title %>
-      </p>
-      <p class="mt-2 text-sm leading-5"><%= msg %></p>
-      <button type="button" class="group absolute top-1 right-1 p-2" aria-label={gettext("close")}>
-        <.icon name="hero-x-mark-solid" class="h-5 w-5 opacity-40 group-hover:opacity-70" />
-      </button>
+      <div class="flex items-center">
+        <div
+          :if={@kind == :info}
+          class={[
+            "inline-flex items-center justify-center flex-shrink-0 w-8 h-8",
+            "text-emerald-500 bg-emerald-100 rounded-lg dark:bg-emerald-800 dark:text-emerald-200"
+          ]}
+        >
+          <.icon name="info-circle" class="h-4 w-4" />
+        </div>
+        <div
+          :if={@kind == :error}
+          class={[
+            "inline-flex items-center justify-center flex-shrink-0 w-8 h-8",
+            "text-rose-500 bg-rose-100 rounded-lg dark:bg-rose-800 dark:text-rose-200"
+          ]}
+        >
+          <.icon name="exclamation-circle" class="h-4 w-4" />
+        </div>
+        <p class="ml-3 text-sm font-normal"><%= msg %></p>
+        <button
+          type="button"
+          class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+          aria-label={gettext("close")}
+        >
+          <.icon name="x" class="h-5 w-5" />
+        </button>
+      </div>
     </div>
     """
   end
@@ -143,17 +157,17 @@ defmodule LocWiseWeb.CoreComponents do
 
   def flash_group(assigns) do
     ~H"""
-    <.flash kind={:info} title="Success!" flash={@flash} />
-    <.flash kind={:error} title="Error!" flash={@flash} />
+    <.flash kind={:info} flash={@flash} />
+    <.flash kind={:error} flash={@flash} />
     <.flash
       id="disconnected"
       kind={:error}
-      title="We can't find the internet"
       phx-disconnected={show("#disconnected")}
       phx-connected={hide("#disconnected")}
       hidden
     >
-      Attempting to reconnect <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" />
+      Attempting to reconnect
+      <.icon name="refresh" class="ml-1 h-4 w-4 animate-spin" flip="horizontal" />
     </.flash>
     """
   end
@@ -213,8 +227,9 @@ defmodule LocWiseWeb.CoreComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3",
-        "text-sm font-semibold leading-6 text-white active:text-white/80",
+        "phx-submit-loading:opacity-75 text-white bg-primary-700 hover:bg-primary-800 focus:ring-4",
+        "focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2",
+        "dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800",
         @class
       ]}
       {@rest}
@@ -378,7 +393,7 @@ defmodule LocWiseWeb.CoreComponents do
   def error(assigns) do
     ~H"""
     <p class="mt-3 flex gap-3 text-sm leading-6 text-rose-600 phx-no-feedback:hidden">
-      <.icon name="hero-exclamation-circle-mini" class="mt-0.5 h-5 w-5 flex-none" />
+      <.icon name="exclamation-circle" class="mt-0.5 h-5 w-5 flex-none" />
       <%= render_slot(@inner_block) %>
     </p>
     """
@@ -441,12 +456,12 @@ defmodule LocWiseWeb.CoreComponents do
       end
 
     ~H"""
-    <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
-      <table class="w-[40rem] mt-11 sm:w-full">
-        <thead class="text-sm text-left leading-6 text-zinc-500">
+    <div class="overflow-y-auto relative overflow-x-auto px-4 sm:overflow-visible sm:px-0">
+      <table class="w-[40rem] mt-11 sm:w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th :for={col <- @col} class="p-0 pr-6 pb-4 font-normal"><%= col[:label] %></th>
-            <th class="relative p-0 pb-4"><span class="sr-only"><%= gettext("Actions") %></span></th>
+            <th :for={col <- @col} class="px-4 py-3"><%= col[:label] %></th>
+            <th class="relative px-4 py-3"><span class="sr-only"><%= gettext("Actions") %></span></th>
           </tr>
         </thead>
         <tbody
@@ -454,29 +469,32 @@ defmodule LocWiseWeb.CoreComponents do
           phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
           class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700"
         >
-          <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-zinc-50">
-            <td
+          <tr
+            :for={row <- @rows}
+            id={@row_id && @row_id.(row)}
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+          >
+            <.dynamic_tag
               :for={{col, i} <- Enum.with_index(@col)}
+              name={(i == 0 && "th") || "td"}
               phx-click={@row_click && @row_click.(row)}
-              class={["relative p-0", @row_click && "hover:cursor-pointer"]}
+              class={[
+                (i == 0 && "px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white") ||
+                  "px-4 py-3",
+                @row_click && "hover:cursor-pointer"
+              ]}
+              {%{scope: (i == 0 && "row") || false}}
             >
-              <div class="block py-4 pr-6">
-                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-zinc-50 sm:rounded-l-xl" />
-                <span class={["relative", i == 0 && "font-semibold text-zinc-900"]}>
-                  <%= render_slot(col, @row_item.(row)) %>
-                </span>
-              </div>
-            </td>
-            <td :if={@action != []} class="relative w-14 p-0">
-              <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
-                <span class="absolute -inset-y-px -right-4 left-0 group-hover:bg-zinc-50 sm:rounded-r-xl" />
-                <span
-                  :for={action <- @action}
-                  class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
-                >
-                  <%= render_slot(action, @row_item.(row)) %>
-                </span>
-              </div>
+              <%= render_slot(col, @row_item.(row)) %>
+            </.dynamic_tag>
+
+            <td :if={@action != []} class="px-4 py-3 flex items-center justify-end">
+              <span
+                :for={action <- @action}
+                class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
+              >
+                <%= render_slot(action, @row_item.(row)) %>
+              </span>
             </td>
           </tr>
         </tbody>
@@ -529,7 +547,7 @@ defmodule LocWiseWeb.CoreComponents do
         navigate={@navigate}
         class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
       >
-        <.icon name="hero-arrow-left-solid" class="h-3 w-3" />
+        <.icon name="arrow-left" class="h-3 w-3" />
         <%= render_slot(@inner_block) %>
       </.link>
     </div>
@@ -537,29 +555,19 @@ defmodule LocWiseWeb.CoreComponents do
   end
 
   @doc """
-  Renders a [Hero Icon](https://heroicons.com).
-
-  Hero icons come in three styles – outline, solid, and mini.
-  By default, the outline style is used, but solid an mini may
-  be applied by using the `-solid` and `-mini` suffix.
-
-  You can customize the size and colors of the icons by setting
-  width, height, and background color classes.
-
-  Icons are extracted from your `assets/vendor/heroicons` directory and bundled
-  within your compiled app.css by the plugin in your `assets/tailwind.config.js`.
+  Renders an icons from https://tabler-icons.io/.
 
   ## Examples
 
-      <.icon name="hero-x-mark-solid" />
-      <.icon name="hero-arrow-path" class="ml-1 w-3 h-3 animate-spin" />
+      <.icon name="stars" class="w-3.5 h-3.5" />
   """
-  attr :name, :string, required: true
-  attr :class, :string, default: nil
+  attr(:name, :string, required: true)
+  attr(:rest, :global, include: ~w(rotate inline flip))
 
-  def icon(%{name: "hero-" <> _} = assigns) do
+  def icon(assigns) do
     ~H"""
-    <span class={[@name, @class]} />
+    <iconify-icon icon={"tabler:#{@name}"} {@rest} height="unset" style="display: inline-block">
+    </iconify-icon>
     """
   end
 
