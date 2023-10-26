@@ -583,12 +583,12 @@ defmodule LocWiseWeb.CoreComponents do
         <tbody
           id={@id}
           phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
-          class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700"
+          class="relative divide-y divide-zinc-100 border-t border-b border-zinc-200 text-sm leading-6 text-zinc-700"
         >
           <tr
             :for={row <- @rows}
             id={@row_id && @row_id.(row)}
-            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+            class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
             <.dynamic_tag
               :for={{col, i} <- Enum.with_index(@col)}
@@ -662,7 +662,7 @@ defmodule LocWiseWeb.CoreComponents do
     <div class="mt-16">
       <.link
         navigate={@navigate}
-        class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
+        class="text-sm flex items-center gap-2 leading-6 font-medium hover:text-gray-900 text-gray-500 dark:text-gray-400 dark:hover:text-white"
       >
         <.icon name="arrow-left" class="h-3 w-3" />
         <%= render_slot(@inner_block) %>
@@ -683,7 +683,7 @@ defmodule LocWiseWeb.CoreComponents do
 
   def icon(assigns) do
     ~H"""
-    <iconify-icon icon={"tabler:#{@name}"} {@rest} height="unset" style="display: inline-block">
+    <iconify-icon icon={"tabler:#{@name}"} {@rest} height="unset" style="display: block">
     </iconify-icon>
     """
   end
