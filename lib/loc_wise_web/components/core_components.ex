@@ -312,15 +312,19 @@ defmodule LocWiseWeb.CoreComponents do
   def input(%{type: "select"} = assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
-      <.label for={@id}><%= @label %></.label>
+      <.label for={@id} class={[@errors != [] && "text-red-700 dark:text-red-500"]}>
+        <%= @label %>
+      </.label>
       <select
         id={@id}
         name={@name}
         class={[
-          "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ",
-          "focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700",
+          "text-sm rounded-lg block w-full p-2.5",
+          "bg-gray-50 border border-gray-300 text-gray-900",
+          "focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700",
           "dark:border-gray-600 dark:placeholder-gray-400 dark:text-white",
           "dark:focus:ring-blue-500 dark:focus:border-blue-500",
+          "phx-no-feedback:border-gray-300 phx-no-feedback:focus:border-blue-500 phx-no-feedback:bg-gray-50 phx-no-feedback:text-gray-900",
           @errors != [] &&
             "bg-red-50 border-red-500 focus:border-red-500 text-red-900 focus:ring-red-500 dark:bg-red-100 dark:border-red-400"
         ]}
@@ -359,15 +363,18 @@ defmodule LocWiseWeb.CoreComponents do
   def input(assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
-      <.label for={@id}><%= @label %></.label>
+      <.label for={@id} class={[@errors != [] && "text-red-700 dark:text-red-500"]}>
+        <%= @label %>
+      </.label>
       <input
         type={@type}
         name={@name}
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-          "phx-no-feedback:border-gray-300 phx-no-feedback:focus:border-blue-500",
+          "border text-sm rounded-lg block w-full p-2.5",
+          "bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+          "phx-no-feedback:bg-gray-50 phx-no-feedback:border-gray-300 phx-no-feedback:focus:border-blue-500 phx-no-feedback:text-gray-900 phx-no-feedback:placeholder-inherit phx-no-feedback:ring-blue-500 dark:phx-no-feedback:bg-gray-700 dark:phx-no-feedback:border-gray-600",
           @errors != [] &&
             "bg-red-50 border-red-500 focus:border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 dark:bg-red-100 dark:border-red-400"
         ]}
@@ -382,11 +389,18 @@ defmodule LocWiseWeb.CoreComponents do
   Renders a label.
   """
   attr :for, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+    <label
+      for={@for}
+      class={[
+        "block mb-2 text-sm font-medium text-gray-900 dark:text-white phx-no-feedback:text-gray-900 dark:phx-no-feedback:text-white",
+        @class
+      ]}
+    >
       <%= render_slot(@inner_block) %>
     </label>
     """
