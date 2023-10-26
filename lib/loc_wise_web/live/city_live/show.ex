@@ -13,7 +13,8 @@ defmodule LocWiseWeb.CityLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:city, Locations.get_city!(id))}
+     |> assign(:city, Locations.get_city!(id))
+     |> assign(:states_options, Locations.list_states_options())}
   end
 
   defp page_title(:show), do: "Show City"

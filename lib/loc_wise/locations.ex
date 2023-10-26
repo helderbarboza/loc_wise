@@ -127,7 +127,7 @@ defmodule LocWise.Locations do
 
   """
   def list_cities do
-    Repo.all(City)
+    Repo.all(from c in City, preload: :state)
   end
 
   @doc """
@@ -144,7 +144,9 @@ defmodule LocWise.Locations do
       ** (Ecto.NoResultsError)
 
   """
-  def get_city!(id), do: Repo.get!(City, id)
+  def get_city!(id) do
+    Repo.one!(from c in City, where: [id: ^id], preload: :state)
+  end
 
   @doc """
   Creates a city.
