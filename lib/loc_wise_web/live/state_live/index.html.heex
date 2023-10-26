@@ -7,7 +7,7 @@
   </:actions>
 </.header>
 
-<.table
+<.special_table
   id="states"
   rows={@streams.states}
   row_click={fn {_id, state} -> JS.navigate(~p"/states/#{state}") end}
@@ -29,7 +29,7 @@
       data-confirm="Are you sure?"
     />
   </:action>
-</.table>
+</.special_table>
 
 <.modal
   :if={@live_action in [:new, :edit]}
