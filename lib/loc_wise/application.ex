@@ -17,7 +17,9 @@ defmodule LocWise.Application do
       # Start Finch
       {Finch, name: LocWise.Finch},
       # Start the Endpoint (http/https)
-      LocWiseWeb.Endpoint
+      LocWiseWeb.Endpoint,
+      # Start the cache supervisor
+      {LocWise.LocalCache, []}
       # Start a worker by calling: LocWise.Worker.start_link(arg)
       # {LocWise.Worker, arg}
     ]

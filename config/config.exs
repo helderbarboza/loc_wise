@@ -20,6 +20,13 @@ config :loc_wise, LocWiseWeb.Endpoint,
   pubsub_server: LocWise.PubSub,
   live_view: [signing_salt: "wcYBeeam"]
 
+config :loc_wise, LocWise.LocalCache,
+  gc_interval: :timer.hours(12),
+  max_size: 1_000,
+  allocated_memory: 10_000_000,
+  gc_cleanup_min_timeout: :timer.seconds(10),
+  gc_cleanup_max_timeout: :timer.minutes(10)
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
