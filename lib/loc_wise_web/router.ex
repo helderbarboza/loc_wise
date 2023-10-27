@@ -13,34 +13,44 @@ defmodule LocWiseWeb.Router do
     plug :fetch_current_user
   end
 
+  pipeline :internal_area do
+    plug :put_area, :internal
+  end
+
+  pipeline :external_area do
+    plug :put_area, :external
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", LocWiseWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
+    pipe_through [:browser, :redirect_if_user_is_authenticated, :external_area]
 
     get "/", PageController, :home
   end
 
   scope "/", LocWiseWeb do
-    pipe_through [:browser, :require_authenticated_user]
+    pipe_through [:browser, :require_authenticated_user, :internal_area]
 
-    live "/overview", OverviewLive.Index, :index
+    live_session :internal_area, on_mount: {LocWiseWeb.Area, :internal} do
+      live "/overview", OverviewLive.Index, :index
 
-    live "/states", StateLive.Index, :index
-    live "/states/new", StateLive.Index, :new
-    live "/states/:id/edit", StateLive.Index, :edit
+      live "/states", StateLive.Index, :index
+      live "/states/new", StateLive.Index, :new
+      live "/states/:id/edit", StateLive.Index, :edit
 
-    live "/states/:id", StateLive.Show, :show
-    live "/states/:id/show/edit", StateLive.Show, :edit
+      live "/states/:id", StateLive.Show, :show
+      live "/states/:id/show/edit", StateLive.Show, :edit
 
-    live "/cities", CityLive.Index, :index
-    live "/cities/new", CityLive.Index, :new
-    live "/cities/:id/edit", CityLive.Index, :edit
+      live "/cities", CityLive.Index, :index
+      live "/cities/new", CityLive.Index, :new
+      live "/cities/:id/edit", CityLive.Index, :edit
 
-    live "/cities/:id", CityLive.Show, :show
-    live "/cities/:id/show/edit", CityLive.Show, :edit
+      live "/cities/:id", CityLive.Show, :show
+      live "/cities/:id/show/edit", CityLive.Show, :edit
+    end
   end
 
   # Other scopes may use custom stacks.
@@ -68,10 +78,13 @@ defmodule LocWiseWeb.Router do
   ## Authentication routes
 
   scope "/", LocWiseWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
+    pipe_through [:browser, :redirect_if_user_is_authenticated, :external_area]
 
     live_session :redirect_if_user_is_authenticated,
-      on_mount: [{LocWiseWeb.UserAuth, :redirect_if_user_is_authenticated}] do
+      on_mount: [
+        {LocWiseWeb.UserAuth, :redirect_if_user_is_authenticated},
+        {LocWiseWeb.Area, :external}
+      ] do
       live "/users/register", UserRegistrationLive, :new
       live "/users/log_in", UserLoginLive, :new
       live "/users/reset_password", UserForgotPasswordLive, :new
@@ -82,10 +95,13 @@ defmodule LocWiseWeb.Router do
   end
 
   scope "/", LocWiseWeb do
-    pipe_through [:browser, :require_authenticated_user]
+    pipe_through [:browser, :require_authenticated_user, :internal_area]
 
     live_session :require_authenticated_user,
-      on_mount: [{LocWiseWeb.UserAuth, :ensure_authenticated}] do
+      on_mount: [
+        {LocWiseWeb.UserAuth, :ensure_authenticated},
+        {LocWiseWeb.Area, :internal}
+      ] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
@@ -97,7 +113,10 @@ defmodule LocWiseWeb.Router do
     delete "/users/log_out", UserSessionController, :delete
 
     live_session :current_user,
-      on_mount: [{LocWiseWeb.UserAuth, :mount_current_user}] do
+      on_mount: [
+        {LocWiseWeb.UserAuth, :mount_current_user},
+        {LocWiseWeb.Area, :external}
+      ] do
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
     end

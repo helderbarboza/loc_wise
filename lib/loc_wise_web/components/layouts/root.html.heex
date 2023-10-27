@@ -8,6 +8,7 @@
       <%= assigns[:page_title] || "LocWise" %>
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
@@ -17,6 +18,7 @@
         <div class="flex flex-wrap items-center justify-between mx-auto">
           <div class="flex justify-start items-center">
             <button
+              :if={@current_area == :internal}
               data-drawer-target="logo-sidebar"
               data-drawer-toggle="logo-sidebar"
               aria-controls="logo-sidebar"

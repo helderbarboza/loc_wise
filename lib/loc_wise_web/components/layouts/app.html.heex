@@ -1,4 +1,5 @@
 <aside
+  :if={@current_area == :internal}
   id="logo-sidebar"
   class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
   aria-label="Sidebar"
@@ -50,13 +51,16 @@
 <%!-- 
 <main class="px-4 py-20 sm:px-6 lg:px-8 md:ml-64 h-auto pt-20">
   <div class="mx-auto max-w-2xl"> --%>
-<main class="p-4 sm:ml-64 mt-14">
+<main class={[@current_area == :internal && "sm:ml-64", "p-4 mt-14"]}>
   <div class="mx-auto max-w-3xl">
     <.flash_group flash={@flash} />
     <%= @inner_content %>
   </div>
 </main>
-<footer class="p-4 sm:px-6 lg:px-8 md:ml-64 bg-white sm:p-6 dark:bg-gray-800">
+<footer class={[
+  @current_area == :internal && "sm:ml-64",
+  "p-4 sm:px-6 lg:px-8 bg-white sm:p-6 dark:bg-gray-800"
+]}>
   <div class="mx-auto">
     <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
     <div class="sm:flex sm:items-center sm:justify-between">
