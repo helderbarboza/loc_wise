@@ -18,13 +18,15 @@ defmodule LocWiseWeb.Router do
   end
 
   scope "/", LocWiseWeb do
-    pipe_through :browser
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
 
     get "/", PageController, :home
   end
 
   scope "/", LocWiseWeb do
     pipe_through [:browser, :require_authenticated_user]
+
+    live "/overview", OverviewLive.Index, :index
 
     live "/states", StateLive.Index, :index
     live "/states/new", StateLive.Index, :new
