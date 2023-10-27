@@ -9,7 +9,8 @@ defmodule LocWise.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      xref: [exclude: [Nebulex.Caching, Nebulex.Caching.Decorators]]
     ]
   end
 
