@@ -4,6 +4,8 @@
 const plugin = require("tailwindcss/plugin")
 const fs = require("fs")
 const path = require("path")
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 
 module.exports = {
   content: [
@@ -29,7 +31,10 @@ module.exports = {
           '900': '#244e55',
           '950': '#133239',
         }
-      }
+      },
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      },
     },
   },
   plugins: [
