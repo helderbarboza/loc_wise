@@ -678,33 +678,35 @@ defmodule LocWiseWeb.CoreComponents do
   Defines pagination opts for `Flop.Phoenix`
   """
   def pagination_opts do
+    assigns = %{}
+
     [
       current_link_attrs: [
         "aria-current": "page",
         class:
-          "text-primary-600 bg-primary-50 border-primary-300 z-10 flex items-center justify-center border px-3 py-2 text-sm leading-tight hover:bg-primary-100 hover:text-primary-700"
+          "text-primary-600 bg-primary-50 border-primary-300 z-10 flex items-center border px-3 py-2 text-sm leading-tight hover:bg-primary-100 hover:text-primary-700"
       ],
       ellipsis_attrs: [
         class:
-          "flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500"
+          "flex items-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500"
       ],
-      ellipsis_content: Phoenix.HTML.Tag.content_tag(:span, "…", class: "cursor-default"),
+      ellipsis_content: ~H[<span class="cursor-default">…</span>],
       previous_link_attrs: [
         class:
-          "order-1 -mr-px rounded-l-lg border border-gray-300 bg-white px-3 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          "order-1 -mr-px rounded-l-lg border border-gray-300 bg-white px-3 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 flex items-center"
       ],
-      previous_link_content: "Previous",
+      previous_link_content: ~H[<.icon name="chevron-left" class="h-4 w-4" />],
       next_link_attrs: [
         class:
-          "order-3 rounded-r-lg border border-gray-300 bg-white px-3 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          "order-3 rounded-r-lg border border-gray-300 bg-white px-3 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 flex items-center"
       ],
-      next_link_content: "Next",
+      next_link_content: ~H[<.icon name="chevron-right" class="h-4 w-4" />],
       disabled_class: "cursor-not-allowed !text-gray-400 hover:!bg-white hover:!text-gray-400",
       page_links: {:ellipsis, 3},
       pagination_link_aria_label: &"Go to page #{&1}",
       pagination_link_attrs: [
         class:
-          "flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          "flex items-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
       ],
       pagination_list_attrs: [class: "order-2 -mr-px inline-flex items-stretch -space-x-px"],
       wrapper_attrs: [class: "flex flex-nowrap w-fit"]
