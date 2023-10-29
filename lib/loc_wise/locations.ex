@@ -9,16 +9,21 @@ defmodule LocWise.Locations do
   alias LocWise.Locations.State
 
   @doc """
-  Returns the list of states.
+  Returns the paginated list of states.
 
   ## Examples
 
-      iex> list_states()
-      [%State{}, ...]
+      iex> list_states(params)
+      {:ok, {[%State{}, ...], %Flop.Meta{}}}
 
   """
-  def list_states do
-    Repo.all(State)
+  def list_states(params) do
+    Flop.validate_and_run(
+      from(c in State, preload: :cities),
+      params,
+      for: State,
+      repo: Repo
+    )
   end
 
   @doc """
@@ -31,7 +36,11 @@ defmodule LocWise.Locations do
 
   """
   def list_states_options do
-    Repo.all(from s in State, select: {s.name, s.id})
+    Repo.all(
+      from s in State,
+        select: {s.name, s.id},
+        order_by: {:asc, s.name}
+    )
   end
 
   @doc """
@@ -118,16 +127,21 @@ defmodule LocWise.Locations do
   alias LocWise.Locations.City
 
   @doc """
-  Returns the list of cities.
+  Returns the paginated list of cities.
 
   ## Examples
 
-      iex> list_cities()
-      [%City{}, ...]
+      iex> list_cities(params)
+      {:ok, {[%City{}, ...], %Flop.Meta{}}}
 
   """
-  def list_cities do
-    Repo.all(from c in City, preload: :state)
+  def list_cities(params) do
+    Flop.validate_and_run(
+      from(c in City, preload: :state),
+      params,
+      for: City,
+      repo: Repo
+    )
   end
 
   @doc """

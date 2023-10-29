@@ -3,6 +3,18 @@ defmodule LocWise.Locations.City do
   import Ecto.Changeset
   alias LocWise.Locations.State
 
+  @derive {
+    Flop.Schema,
+    filterable: [:name],
+    sortable: [:name],
+    default_limit: 20,
+    max_limit: 100,
+    default_order: %{
+      order_by: [:name],
+      order_directions: [:asc]
+    }
+  }
+
   schema "cities" do
     field :name, :string
     belongs_to :state, State

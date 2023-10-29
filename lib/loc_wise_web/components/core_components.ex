@@ -446,122 +446,6 @@ defmodule LocWiseWeb.CoreComponents do
   end
 
   @doc ~S"""
-  Renders an advanced table.
-
-  ## Examples
-
-      <.special_table id="users" rows={@users}>
-        <:col :let={user} label="id"><%= user.id %></:col>
-        <:col :let={user} label="username"><%= user.username %></:col>
-      </.special_table>
-  """
-  attr :id, :string, required: true
-  attr :rows, :list, required: true
-  attr :row_id, :any, default: nil, doc: "the function for generating the row id"
-  attr :row_click, :any, default: nil, doc: "the function for handling phx-click on each row"
-
-  attr :row_item, :any,
-    default: &Function.identity/1,
-    doc: "the function for mapping each row before calling the :col and :action slots"
-
-  slot :col, required: true do
-    attr :label, :string
-  end
-
-  slot :action, doc: "the slot for showing user actions in the last table column"
-
-  def special_table(assigns) do
-    assigns =
-      with %{rows: %Phoenix.LiveView.LiveStream{}} <- assigns do
-        assign(assigns, row_id: assigns.row_id || fn {id, _item} -> id end)
-      end
-
-    ~H"""
-    <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden mt-8">
-      <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-        <div class="w-full md:w-1/2">
-          <form class="flex items-center">
-            <label for="simple-search" class="sr-only">Search</label>
-            <div class="relative w-full">
-              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <.icon
-                  aria-hidden="true"
-                  class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                  name="search"
-                />
-              </div>
-              <input
-                type="text"
-                id="simple-search"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Search"
-                required=""
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="overflow-x-auto">
-        <table class="w-[40rem] sm:w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th :for={col <- @col} class="px-4 py-3"><%= col[:label] %></th>
-              <th class="relative px-4 py-3">
-                <span class="sr-only"><%= gettext("Actions") %></span>
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            id={@id}
-            phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
-            class="relative divide-y divide-zinc-100 border-t border-b border-zinc-200 text-sm leading-6 text-zinc-700"
-          >
-            <tr
-              :for={row <- @rows}
-              id={@row_id && @row_id.(row)}
-              class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600"
-            >
-              <.dynamic_tag
-                :for={{col, i} <- Enum.with_index(@col)}
-                name={(i == 0 && "th") || "td"}
-                phx-click={@row_click && @row_click.(row)}
-                class={[
-                  (i == 0 && "px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white") ||
-                    "px-4 py-3",
-                  "w-full",
-                  @row_click && "hover:cursor-pointer"
-                ]}
-                {%{scope: (i == 0 && "row") || false}}
-              >
-                <%= render_slot(col, @row_item.(row)) %>
-              </.dynamic_tag>
-
-              <td :if={@action != []} class="px-4 py-3 flex items-center justify-end">
-                <span
-                  :for={action <- @action}
-                  class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
-                >
-                  <%= render_slot(action, @row_item.(row)) %>
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <nav
-        class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
-        aria-label="Table navigation"
-      >
-        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-          Showing <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
-          of <span class="font-semibold text-gray-900 dark:text-white">1000</span>
-        </span>
-      </nav>
-    </div>
-    """
-  end
-
-  @doc ~S"""
   Renders a table with generic styling.
 
   ## Examples
@@ -788,5 +672,42 @@ defmodule LocWiseWeb.CoreComponents do
   """
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
+  end
+
+  @doc """
+  Defines pagination opts for `Flop.Phoenix`
+  """
+  def pagination_opts do
+    [
+      current_link_attrs: [
+        "aria-current": "page",
+        class:
+          "text-primary-600 bg-primary-50 border-primary-300 z-10 flex items-center justify-center border px-3 py-2 text-sm leading-tight hover:bg-primary-100 hover:text-primary-700"
+      ],
+      ellipsis_attrs: [
+        class:
+          "flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500"
+      ],
+      ellipsis_content: Phoenix.HTML.Tag.content_tag(:span, "…", class: "cursor-default"),
+      previous_link_attrs: [
+        class:
+          "order-1 -mr-px rounded-l-lg border border-gray-300 bg-white px-3 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+      ],
+      previous_link_content: "Previous",
+      next_link_attrs: [
+        class:
+          "order-3 rounded-r-lg border border-gray-300 bg-white px-3 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+      ],
+      next_link_content: "Next",
+      disabled_class: "cursor-not-allowed !text-gray-400 hover:!bg-white hover:!text-gray-400",
+      page_links: {:ellipsis, 3},
+      pagination_link_aria_label: &"Go to page #{&1}",
+      pagination_link_attrs: [
+        class:
+          "flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+      ],
+      pagination_list_attrs: [class: "order-2 -mr-px inline-flex items-stretch -space-x-px"],
+      wrapper_attrs: [class: "flex flex-nowrap w-fit"]
+    ]
   end
 end
