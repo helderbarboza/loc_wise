@@ -32,7 +32,7 @@ defmodule LocWiseWeb.TableComponent do
     assigns =
       assign(assigns,
         form: Phoenix.Component.to_form(assigns.meta),
-        search_form_id: "search-#{assigns.id}"
+        table_top_id: "table-#{assigns.id}"
       )
 
     ~H"""
@@ -42,7 +42,6 @@ defmodule LocWiseWeb.TableComponent do
           <.form
             class="flex items-center"
             for={@form}
-            id={@search_form_id}
             phx-target={@target}
             phx-change={@on_change}
             phx-submit={@on_change}
@@ -73,6 +72,7 @@ defmodule LocWiseWeb.TableComponent do
         </div>
       </div>
       <div class="overflow-x-auto">
+        <div id={@table_top_id} />
         <table class="w-[40rem] sm:w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -145,7 +145,9 @@ defmodule LocWiseWeb.TableComponent do
 
         <Flop.Phoenix.pagination
           meta={@meta}
-          on_paginate={JS.push(@on_paginate)}
+          on_paginate={
+            JS.push(@on_paginate) |> JS.dispatch("cap_wise:scroll_to", to: "##{@table_top_id}")
+          }
           target={@target}
           path={@path}
         />
