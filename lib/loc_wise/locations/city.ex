@@ -8,7 +8,7 @@ defmodule LocWise.Locations.City do
     filterable: [:name],
     sortable: [:name],
     default_limit: 20,
-    max_limit: 100,
+    max_limit: 1000,
     default_order: %{
       order_by: [:name],
       order_directions: [:asc]
@@ -17,6 +17,7 @@ defmodule LocWise.Locations.City do
 
   schema "cities" do
     field :name, :string
+    field :code, :integer
     belongs_to :state, State
 
     timestamps()

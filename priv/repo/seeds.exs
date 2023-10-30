@@ -10,13 +10,14 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
+alias LocWise.Clients.DadosIBGE
 alias LocWise.Locations.City
 alias LocWise.Locations.State
 alias LocWise.Repo
 
 now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
-%{status: 200, body: ibge_states} = LocWise.IBGE.get!("/estados")
+{:ok, %{status: 200, body: ibge_states}} = DadosIBGE.states()
 
 {_count, states} =
   ibge_states
@@ -34,13 +35,14 @@ now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
       name: state["nome"],
       acronym: state["sigla"],
       region: region,
+      code: state["id"],
       inserted_at: now,
       updated_at: now
     }
   end)
   |> then(&Repo.insert_all(State, &1, returning: true))
 
-%{status: 200, body: ibge_cities} = LocWise.IBGE.get!("/municipios")
+{:ok, %{status: 200, body: ibge_cities}} = DadosIBGE.cities()
 
 Enum.map(ibge_cities, fn city ->
   state =
@@ -52,6 +54,7 @@ Enum.map(ibge_cities, fn city ->
   %{
     name: city["nome"],
     state_id: state.id,
+    code: city["id"],
     inserted_at: now,
     updated_at: now
   }

@@ -1,6 +1,7 @@
 defmodule LocWise.Locations.State do
   use Ecto.Schema
   import Ecto.Changeset
+  alias LocWise.Locations.City
 
   @derive {
     Flop.Schema,
@@ -18,6 +19,8 @@ defmodule LocWise.Locations.State do
     field :acronym, :string
     field :name, :string
     field :region, Ecto.Enum, values: [:north, :northeast, :southeast, :south, :midwest]
+    field :code, :integer
+    has_many :cities, City
 
     timestamps()
   end
