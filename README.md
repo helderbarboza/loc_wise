@@ -29,4 +29,4 @@ If you managed to prepare the environment, follow the next steps:
 
   * Run `mix setup` to install, setup dependencies and initialize the database
   * Run tests using `mix test`
-  * Start the server with `mix phx.server`, once it is done, head to http://localhost:4000 
+  * Start the server with `mix phx.server`, once it is done go to http://localhost:4000 
