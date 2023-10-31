@@ -39,7 +39,15 @@ defmodule LocWise.Clients.DadosIBGE do
   [Source](https://servicodados.ibge.gov.br/api/docs/localidades#api-Municipios-estadosUFMunicipiosGet).
   """
   @decorate cacheable(cache: Cache, opts: [ttl: @ttl], match: match())
-  def get_cities_by_state(uf), do: get("/v1/localidades/estados/#{uf}/municipios")
+  def get_cities_by_state(id), do: get("/v1/localidades/estados/#{id}/municipios")
+
+  @doc """
+  Mesh metadata by state.
+
+  [Source](https://servicodados.ibge.gov.br/api/docs/malhas?versao=3#api-Metadados-estadosIdMetadadosGet).
+  """
+  @decorate cacheable(cache: Cache, opts: [ttl: @ttl], match: match())
+  def get_mesh_metadata_by_state(id), do: get("/v3/malhas/estados/#{id}/metadados")
 
   defp match, do: &match?({:ok, %{status: 200}}, &1)
 end
