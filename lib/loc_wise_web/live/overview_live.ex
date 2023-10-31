@@ -37,7 +37,9 @@ defmodule LocWiseWeb.OverviewLive do
     states = Locations.count_states()
 
     socket =
-      assign_async(socket, [:cities, :states], fn ->
+      socket
+      |> assign(page_title: "Overview")
+      |> assign_async([:cities, :states], fn ->
         {:ok,
          %{
            cities: %LocWise.SingleStat{value: cities, variable: "Cities"},

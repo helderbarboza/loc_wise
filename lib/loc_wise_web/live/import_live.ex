@@ -40,7 +40,7 @@ defmodule LocWiseWeb.ImportLive do
   end
 
   def mount(_params, _session, socket) do
-    socket = assign(socket, started: false, done: false)
+    socket = assign(socket, page_title: "Import", started: false, done: false)
 
     {:ok, socket}
   end
