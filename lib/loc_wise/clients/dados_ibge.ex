@@ -9,15 +9,35 @@ defmodule LocWise.Clients.DadosIBGE do
 
   @ttl :timer.hours(1)
 
+  @doc """
+  States.
+
+  [Source](https://servicodados.ibge.gov.br/api/docs/localidades#api-UFs-estadosGet).
+  """
   @decorate cacheable(cache: Cache, opts: [ttl: @ttl], match: match())
   def get_states, do: get("/v1/localidades/estados")
 
+  @doc """
+  Cities.
+
+  [Source](https://servicodados.ibge.gov.br/api/docs/localidades#api-Municipios-municipiosGet).
+  """
   @decorate cacheable(cache: Cache, opts: [ttl: @ttl], match: match())
   def get_cities, do: get("/v1/localidades/municipios")
 
+  @doc """
+  Mesh metadata by city.
+
+  [Source](https://servicodados.ibge.gov.br/api/docs/malhas?versao=3#api-Metadados-municipiosIdMetadadosGet).
+  """
   @decorate cacheable(cache: Cache, opts: [ttl: @ttl], match: match())
   def get_mesh_metadata_by_city(id), do: get("/v3/malhas/municipios/#{id}/metadados")
 
+  @doc """
+  Cities by UF (Federation Unit).
+
+  [Source](https://servicodados.ibge.gov.br/api/docs/localidades#api-Municipios-estadosUFMunicipiosGet).
+  """
   @decorate cacheable(cache: Cache, opts: [ttl: @ttl], match: match())
   def get_cities_by_state(uf), do: get("/v1/localidades/estados/#{uf}/municipios")
 
