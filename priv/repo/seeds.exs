@@ -35,7 +35,7 @@ now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
       name: state["nome"],
       acronym: state["sigla"],
       region: region,
-      code: state["id"],
+      code: to_string(state["id"]),
       inserted_at: now,
       updated_at: now
     }
@@ -54,7 +54,7 @@ Enum.map(ibge_cities, fn city ->
   %{
     name: city["nome"],
     state_id: state.id,
-    code: city["id"],
+    code: to_string(city["id"]),
     inserted_at: now,
     updated_at: now
   }

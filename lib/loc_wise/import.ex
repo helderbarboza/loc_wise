@@ -25,7 +25,7 @@ defmodule LocWise.Import do
           name: state["nome"],
           acronym: state["sigla"],
           region: region,
-          code: state["id"],
+          code: to_string(state["id"]),
           inserted_at: now,
           updated_at: now
         }
@@ -48,7 +48,7 @@ defmodule LocWise.Import do
         %{
           name: city["nome"],
           state_id: state.id,
-          code: city["id"],
+          code: to_string(city["id"]),
           inserted_at: now,
           updated_at: now
         }

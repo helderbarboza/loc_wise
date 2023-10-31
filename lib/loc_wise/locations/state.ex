@@ -5,21 +5,26 @@ defmodule LocWise.Locations.State do
 
   @derive {
     Flop.Schema,
-    filterable: [:name],
+    filterable: [:name_code],
     sortable: [:name],
     default_limit: 20,
     max_limit: 100,
     default_order: %{
       order_by: [:name],
       order_directions: [:asc]
-    }
+    },
+    adapter_opts: [
+      compound_fields: [
+        name_code: [:name, :code]
+      ]
+    ]
   }
 
   schema "states" do
     field :acronym, :string
     field :name, :string
     field :region, Ecto.Enum, values: [:north, :northeast, :southeast, :south, :midwest]
-    field :code, :integer
+    field :code, :string
     has_many :cities, City
 
     timestamps()

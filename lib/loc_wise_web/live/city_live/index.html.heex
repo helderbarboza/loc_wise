@@ -11,7 +11,7 @@
   module={LocWiseWeb.TableComponent}
   id="cities"
   meta={@meta}
-  fields={[name: [op: :ilike]]}
+  fields={[name_code: [op: :ilike_or]]}
   rows={@streams.cities}
   path={~p"/cities"}
   row_click={fn {_id, city} -> JS.navigate(~p"/cities/#{city}") end}
