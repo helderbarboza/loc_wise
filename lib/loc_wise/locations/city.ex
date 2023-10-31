@@ -1,6 +1,10 @@
 defmodule LocWise.Locations.City do
+  @moduledoc false
+
   use Ecto.Schema
+
   import Ecto.Changeset
+
   alias LocWise.Locations.State
 
   @derive {

@@ -1,7 +1,9 @@
 defmodule LocWiseWeb.OverviewLive do
-  alias LocWise.Locations
   use LocWiseWeb, :live_view
+
   import LocWiseWeb.ContentTypography
+
+  alias LocWise.Locations
 
   def render(assigns) do
     ~H"""

@@ -1,9 +1,9 @@
 defmodule LocWise.AccountsTest do
   use LocWise.DataCase
 
-  alias LocWise.Accounts
-
   import LocWise.AccountsFixtures
+
+  alias LocWise.Accounts
   alias LocWise.Accounts.{User, UserToken}
 
   describe "get_user_by_email/1" do

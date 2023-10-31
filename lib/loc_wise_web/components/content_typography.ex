@@ -1,4 +1,8 @@
 defmodule LocWiseWeb.ContentTypography do
+  @moduledoc """
+  Typography components for content pages.
+  """
+
   use Phoenix.Component
 
   attr :rest, :global

@@ -1,11 +1,13 @@
 defmodule LocWise.Import do
+  @moduledoc false
+
   alias LocWise.Clients.DadosIBGE
   alias LocWise.Locations.City
   alias LocWise.Locations.State
   alias LocWise.Repo
 
   def import do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    now = NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
 
     {:ok, %{status: 200, body: ibge_states}} = DadosIBGE.get_states()
 

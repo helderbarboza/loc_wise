@@ -1,4 +1,8 @@
 defmodule LocWiseWeb.Spinner do
+  @moduledoc """
+  UI spinner components.
+  """
+
   use Phoenix.Component
 
   def spinner(assigns) do

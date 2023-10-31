@@ -1,4 +1,6 @@
 defmodule LocWiseWeb.StatCardComponent do
+  @moduledoc false
+
   use LocWiseWeb, :live_component
 
   import Number.Delimit, only: [number_to_delimited: 2]

@@ -1,4 +1,8 @@
 defmodule LocWiseWeb.TableComponent do
+  @moduledoc """
+  An advanced table component with pagination and search.
+  """
+
   use LocWiseWeb, :live_component
 
   attr :id, :string, required: true

@@ -4,9 +4,10 @@ defmodule LocWise.Locations do
   """
 
   import Ecto.Query, warn: false
-  alias LocWise.Repo
 
+  alias LocWise.Locations.City
   alias LocWise.Locations.State
+  alias LocWise.Repo
 
   @doc """
   Returns the paginated list of states.
@@ -127,8 +128,6 @@ defmodule LocWise.Locations do
   def count_states do
     Repo.one(from State, select: count())
   end
-
-  alias LocWise.Locations.City
 
   @doc """
   Returns the paginated list of cities.

@@ -1,21 +1,9 @@
 defmodule LocWise.Accounts.UserNotifier do
+  @moduledoc false
+
   import Swoosh.Email
 
   alias LocWise.Mailer
-
-  # Delivers the email using the application mailer.
-  defp deliver(recipient, subject, body) do
-    email =
-      new()
-      |> to(recipient)
-      |> from({"LocWise", "contact@example.com"})
-      |> subject(subject)
-      |> text_body(body)
-
-    with {:ok, _metadata} <- Mailer.deliver(email) do
-      {:ok, email}
-    end
-  end
 
   @doc """
   Deliver instructions to confirm account.
@@ -75,5 +63,19 @@ defmodule LocWise.Accounts.UserNotifier do
 
     ==============================
     """)
+  end
+
+  # Delivers the email using the application mailer.
+  defp deliver(recipient, subject, body) do
+    email =
+      new()
+      |> to(recipient)
+      |> from({"LocWise", "contact@example.com"})
+      |> subject(subject)
+      |> text_body(body)
+
+    with {:ok, _metadata} <- Mailer.deliver(email) do
+      {:ok, email}
+    end
   end
 end

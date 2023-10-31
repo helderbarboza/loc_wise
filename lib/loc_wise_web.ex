@@ -80,6 +80,15 @@ defmodule LocWiseWeb do
     end
   end
 
+  def verified_routes do
+    quote do
+      use Phoenix.VerifiedRoutes,
+        endpoint: LocWiseWeb.Endpoint,
+        router: LocWiseWeb.Router,
+        statics: LocWiseWeb.static_paths()
+    end
+  end
+
   defp html_helpers do
     quote do
       # HTML escaping functionality
@@ -93,15 +102,6 @@ defmodule LocWiseWeb do
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())
-    end
-  end
-
-  def verified_routes do
-    quote do
-      use Phoenix.VerifiedRoutes,
-        endpoint: LocWiseWeb.Endpoint,
-        router: LocWiseWeb.Router,
-        statics: LocWiseWeb.static_paths()
     end
   end
 

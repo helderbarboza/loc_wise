@@ -1,10 +1,11 @@
 defmodule LocWiseWeb.UserAuthTest do
   use LocWiseWeb.ConnCase, async: true
 
-  alias Phoenix.LiveView
+  import LocWise.AccountsFixtures
+
   alias LocWise.Accounts
   alias LocWiseWeb.UserAuth
-  import LocWise.AccountsFixtures
+  alias Phoenix.LiveView
 
   @remember_me_cookie "_loc_wise_web_user_remember_me"
 

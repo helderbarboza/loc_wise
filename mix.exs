@@ -57,7 +57,8 @@ defmodule LocWise.MixProject do
       {:decorator, "~> 1.4"},
       {:flop, "~> 0.23"},
       {:flop_phoenix, "~> 0.22"},
-      {:number, "~> 1.0"}
+      {:number, "~> 1.0"},
+      {:credo, "~> 1.7"}
     ]
   end
 

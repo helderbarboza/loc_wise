@@ -1,9 +1,10 @@
 defmodule LocWiseWeb.UserSettingsLiveTest do
   use LocWiseWeb.ConnCase
 
-  alias LocWise.Accounts
   import Phoenix.LiveViewTest
   import LocWise.AccountsFixtures
+
+  alias LocWise.Accounts
 
   describe "Settings page" do
     test "renders settings page", %{conn: conn} do

@@ -1,10 +1,9 @@
 defmodule LocWiseWeb.Telemetry do
-  use Supervisor
-  import Telemetry.Metrics
+  @moduledoc false
 
-  def start_link(arg) do
-    Supervisor.start_link(__MODULE__, arg, name: __MODULE__)
-  end
+  use Supervisor
+
+  import Telemetry.Metrics
 
   @impl true
   def init(_arg) do
@@ -17,6 +16,10 @@ defmodule LocWiseWeb.Telemetry do
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
+  end
+
+  def start_link(arg) do
+    Supervisor.start_link(__MODULE__, arg, name: __MODULE__)
   end
 
   def metrics do

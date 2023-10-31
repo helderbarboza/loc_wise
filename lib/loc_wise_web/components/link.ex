@@ -1,4 +1,8 @@
 defmodule LocWiseWeb.Link do
+  @moduledoc """
+  Link related components.
+  """
+
   use Phoenix.Component
 
   import LocWiseWeb.CoreComponents, only: [icon: 1]

@@ -65,7 +65,6 @@ defmodule LocWise.IBGE do
   end
 
   def territorial_area_by_state(%{code: id} = _state) do
-    IO.inspect(id)
     {:ok, %{body: [item]}} = DadosIBGE.get_mesh_metadata_by_state(id)
 
     %SingleStat{

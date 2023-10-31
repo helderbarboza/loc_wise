@@ -1,4 +1,8 @@
 defmodule LocWiseWeb.Area do
+  @moduledoc """
+  Assigns the current area to the connection.
+  """
+
   import Plug.Conn
 
   @areas [:internal, :external]
