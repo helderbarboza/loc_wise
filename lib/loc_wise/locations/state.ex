@@ -14,8 +14,11 @@ defmodule LocWise.Locations.State do
       order_directions: [:asc]
     },
     adapter_opts: [
-      compound_fields: [
-        name_code: [:name, :code]
+      custom_fields: [
+        name_code: [
+          filter: {LocWise.FlopFilters, :name_and_code, []},
+          ecto_type: :string
+        ]
       ]
     ]
   }
