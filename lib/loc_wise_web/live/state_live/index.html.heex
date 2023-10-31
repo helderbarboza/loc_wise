@@ -32,7 +32,7 @@
       title="Delete"
       icon_name="trash"
       phx-click={JS.push("delete", value: %{id: state.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
+      data-confirm="All cities referencing this state will be also deleted. Are you sure?"
     />
   </:action>
 </.live_component>

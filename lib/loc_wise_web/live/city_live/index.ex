@@ -52,11 +52,17 @@ defmodule LocWiseWeb.CityLive.Index do
   end
 
   @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
+  def handle_event("delete", %{"id" => id} = params, socket) do
     city = Locations.get_city!(id)
     {:ok, _} = Locations.delete_city(city)
+    {:ok, {cities, meta}} = Locations.list_cities(params)
 
-    {:noreply, stream_delete(socket, :cities, city)}
+    socket =
+      socket
+      |> assign(:meta, meta)
+      |> stream(:cities, cities, reset: true)
+
+    {:noreply, socket}
   end
 
   @impl true
