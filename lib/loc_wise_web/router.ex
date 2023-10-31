@@ -35,7 +35,7 @@ defmodule LocWiseWeb.Router do
     pipe_through [:browser, :require_authenticated_user, :internal_area]
 
     live_session :internal_area, on_mount: {LocWiseWeb.Area, :internal} do
-      live "/overview", OverviewLive.Index, :index
+      live "/overview", OverviewLive
 
       live "/states", StateLive.Index, :index
       live "/states/new", StateLive.Index, :new

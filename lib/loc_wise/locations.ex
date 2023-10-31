@@ -124,6 +124,10 @@ defmodule LocWise.Locations do
     State.changeset(state, attrs)
   end
 
+  def count_states do
+    Repo.one(from State, select: count())
+  end
+
   alias LocWise.Locations.City
 
   @doc """
@@ -225,5 +229,9 @@ defmodule LocWise.Locations do
   """
   def change_city(%City{} = city, attrs \\ %{}) do
     City.changeset(city, attrs)
+  end
+
+  def count_cities do
+    Repo.one(from City, select: count())
   end
 end
