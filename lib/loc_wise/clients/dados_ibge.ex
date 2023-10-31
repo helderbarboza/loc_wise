@@ -1,4 +1,7 @@
 defmodule LocWise.Clients.DadosIBGE do
+  @moduledoc """
+  Functions to use IBGE's [data service API](https://servicodados.ibge.gov.br/api/docs).
+  """
   use Tesla
   use Nebulex.Caching
 

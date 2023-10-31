@@ -1,4 +1,6 @@
 defmodule CustomFunctions do
+  @moduledoc false
+
   defmacro lower(value) do
     quote do
       fragment("lower(?)", unquote(value))
@@ -13,9 +15,14 @@ defmodule CustomFunctions do
 end
 
 defmodule LocWise.FlopFilters do
+  @moduledoc """
+  Custom filters to be used with `Flop`.
+  """
+
   import Ecto.Query
   import CustomFunctions
 
+  @doc false
   def name_and_code(q, %Flop.Filter{value: value}, _opts) do
     wildcarded = "%#{value}%"
 

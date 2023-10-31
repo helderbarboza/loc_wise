@@ -1,4 +1,8 @@
 defmodule LocWise.IBGE do
+  @moduledoc """
+  Decodes data obtained from external APIs and wraps it on a struct.
+  """
+
   alias LocWise.Clients.DadosIBGE
   alias LocWise.Clients.SidraIBGE
   alias LocWise.SingleStat

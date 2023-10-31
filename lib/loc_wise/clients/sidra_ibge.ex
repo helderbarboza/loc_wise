@@ -1,4 +1,8 @@
 defmodule LocWise.Clients.SidraIBGE do
+  @moduledoc """
+  Functions to use IBGE's [Sidra API](https://sidra.ibge.gov.br).
+  """
+
   use Tesla
   use Nebulex.Caching
 
