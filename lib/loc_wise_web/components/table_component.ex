@@ -92,7 +92,7 @@ defmodule LocWiseWeb.TableComponent do
           <tbody
             id={@id}
             phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
-            class="relative divide-y divide-zinc-100 border-t border-b border-zinc-200 text-sm leading-6 text-zinc-700"
+            class="relative divide-y divide-zinc-100 dark:divide-zinc-700 border-t border-b border-zinc-200 dark:border-zinc-600 text-sm leading-6"
           >
             <tr
               :for={row <- @rows}

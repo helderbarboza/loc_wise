@@ -14,7 +14,7 @@ defmodule LocWiseWeb.StatCardComponent do
     <section class="block relative p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
       <.icon
         name={@icon_name}
-        class="absolute h-full text-gray-500/10 dark:text-gray-500/10 right-0 top-0 translate-x-1/4 mix-blend-difference stroke-0 pointer-events-none"
+        class="absolute h-full text-gray-700/10 dark:text-gray-300/10 right-0 top-0 translate-x-1/4 mix-blend-darken dark:mix-blend-lighten stroke-0 pointer-events-none"
       />
       <.async_result :let={stat} assign={@stat}>
         <:loading>

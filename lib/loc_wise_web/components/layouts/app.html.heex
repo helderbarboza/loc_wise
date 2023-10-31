@@ -64,7 +64,7 @@
 </aside>
 <main class={[
   @current_area == :internal && "lg:ml-64",
-  "p-4 mt-14 min-h-[calc(100vh-3.5rem-8.4rem)]"
+  "p-4 mt-14  min-h-[calc(100vh-3.5rem-8.8rem)] sm:min-h-[calc(100vh-3.5rem-7.4rem)] lg:min-h-[calc(100vh-3.5rem-8.4rem)]"
 ]}>
   <div class="mx-auto max-w-3xl">
     <.flash_group flash={@flash} />
@@ -73,7 +73,7 @@
 </main>
 <footer class={[
   @current_area == :internal && "lg:ml-64",
-  "p-4 sm:px-6 lg:px-8 bg-white sm:p-6 dark:bg-gray-800"
+  "p-4 sm:px-6 lg:px-8 bg-white sm:p-6 dark:bg-gray-900"
 ]}>
   <div class="mx-auto">
     <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />

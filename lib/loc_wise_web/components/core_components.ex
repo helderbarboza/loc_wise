@@ -201,7 +201,7 @@ defmodule LocWiseWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-10 space-y-8 bg-white">
+      <div class="mt-10 space-y-8">
         <%= render_slot(@inner_block, f) %>
         <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
           <%= render_slot(action, f) %>
@@ -296,7 +296,7 @@ defmodule LocWiseWeb.CoreComponents do
 
     ~H"""
     <div phx-feedback-for={@name}>
-      <label class="flex items-center gap-4 text-sm leading-6 text-zinc-600">
+      <div class="flex items-center">
         <input type="hidden" name={@name} value="false" />
         <input
           type="checkbox"
@@ -304,11 +304,13 @@ defmodule LocWiseWeb.CoreComponents do
           name={@name}
           value="true"
           checked={@checked}
-          class="rounded border-zinc-300 text-zinc-900 focus:ring-0"
+          class="rw-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           {@rest}
         />
-        <%= @label %>
-      </label>
+        <label class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          <%= @label %>
+        </label>
+      </div>
       <.error :for={msg <- @errors}><%= msg %></.error>
     </div>
     """
@@ -438,10 +440,10 @@ defmodule LocWiseWeb.CoreComponents do
     ~H"""
     <header class={[@actions != [] && "flex items-center justify-between gap-6", @class]}>
       <div>
-        <h1 class="text-lg font-semibold leading-8 text-zinc-800">
+        <h1 class="mb-2 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
           <%= render_slot(@inner_block) %>
         </h1>
-        <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
+        <p :if={@subtitle != []} class="text-lg text-gray-500 lg:mb-0 dark:text-gray-400">
           <%= render_slot(@subtitle) %>
         </p>
       </div>
@@ -690,34 +692,40 @@ defmodule LocWiseWeb.CoreComponents do
   """
   def pagination_opts do
     assigns = %{}
+    item = "flex items-center justify-center px-3 h-8 leading-tight border"
+    hover = "hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-white"
+
+    normal =
+      "text-gray-500 bg-white border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+
+    current =
+      "text-primary-600 bg-primary-50 hover:bg-primary-100 hover:text-primary-700 dark:text-white dark:bg-gray-700 border-primary-300 dark:border-primary-700"
 
     [
       current_link_attrs: [
         "aria-current": "page",
-        class:
-          "text-primary-600 bg-primary-50 border-primary-300 z-10 flex items-center border px-3 py-2 text-sm leading-tight hover:bg-primary-100 hover:text-primary-700"
+        class: ["z-10", item, current, hover]
       ],
       ellipsis_attrs: [
-        class:
-          "flex items-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500"
+        class: ["text-gray-400 dark:text-gray-500", item, normal]
       ],
       ellipsis_content: ~H[<span class="cursor-default">…</span>],
       previous_link_attrs: [
-        class:
-          "order-1 -mr-px rounded-l-lg border border-gray-300 bg-white px-3 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 flex items-center"
+        class: ["order-1 rounded-l-lg -mr-px ", item, normal, hover]
       ],
       previous_link_content: ~H[<.icon name="chevron-left" class="h-4 w-4" />],
       next_link_attrs: [
-        class:
-          "order-3 rounded-r-lg border border-gray-300 bg-white px-3 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 flex items-center"
+        class: ["order-3 rounded-r-lg", item, normal, hover]
       ],
       next_link_content: ~H[<.icon name="chevron-right" class="h-4 w-4" />],
-      disabled_class: "cursor-not-allowed !text-gray-400 hover:!bg-white hover:!text-gray-400",
+      disabled_class: [
+        "cursor-not-allowed !text-gray-300 hover:!bg-white hover:!text-gray-300 dark:hover:!bg-gray-800 dark:!text-gray-400 dark:hover:!text-gray-400",
+        item
+      ],
       page_links: {:ellipsis, 3},
       pagination_link_aria_label: &"Go to page #{&1}",
       pagination_link_attrs: [
-        class:
-          "flex items-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+        class: [item, hover, normal]
       ],
       pagination_list_attrs: [class: "order-2 -mr-px inline-flex items-stretch -space-x-px"],
       wrapper_attrs: [class: "flex flex-nowrap w-fit"]
