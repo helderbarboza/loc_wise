@@ -1,9 +1,10 @@
 defmodule LocWiseWeb.ImportLive do
-  alias LocWise.Import
   use LocWiseWeb, :live_view
 
   import LocWiseWeb.ContentTypography
   import LocWiseWeb.Spinner
+
+  alias LocWise.Import
 
   attr :started, :boolean
   attr :done, :boolean
