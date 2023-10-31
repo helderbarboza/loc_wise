@@ -1,18 +1,32 @@
 # LocWise
 
-To start your Phoenix server:
+Location Management and Data Visualization.
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## Usage
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Here you can choose one of these options to prepare your environment.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+<details>
+<summary>Using Docker</summary>
+<p>
+You can run this application on a Docker container, to do this you will need to 
+have Docker installed on your machine.
 
-## Learn more
+* Start a container with `docker-compose up -d`
+</p>
+</details>
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+<details>
+<summary>Using asdf</summary>
+<p>
+You can also use <a href="https://asdf-vm.com/">asdf</a> if you have it installed.
+
+To install all necessary tools, simply run `asdf install`.
+</p>
+</details>
+
+If you managed to prepare the environment, follow the next steps:
+
+  * Run `mix setup` to install, setup dependencies and initialize the database
+  * Run tests using `mix test`
+  * Start the server with `mix phx.server`, once it is done, head to http://localhost:4000 
