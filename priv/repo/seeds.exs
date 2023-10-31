@@ -17,7 +17,7 @@ alias LocWise.Repo
 
 now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
-{:ok, %{status: 200, body: ibge_states}} = DadosIBGE.states()
+{:ok, %{status: 200, body: ibge_states}} = DadosIBGE.get_states()
 
 {_count, states} =
   ibge_states
@@ -42,7 +42,7 @@ now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
   end)
   |> then(&Repo.insert_all(State, &1, returning: true))
 
-{:ok, %{status: 200, body: ibge_cities}} = DadosIBGE.cities()
+{:ok, %{status: 200, body: ibge_cities}} = DadosIBGE.get_cities()
 
 Enum.map(ibge_cities, fn city ->
   state =
