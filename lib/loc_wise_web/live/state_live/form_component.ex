@@ -25,6 +25,7 @@ defmodule LocWiseWeb.StateLive.FormComponent do
           </div>
           <.input field={@form[:acronym]} type="text" label="Acronym" />
         </div>
+        <.input field={@form[:code]} type="number" label="Code" />
         <.input
           field={@form[:region]}
           type="select"

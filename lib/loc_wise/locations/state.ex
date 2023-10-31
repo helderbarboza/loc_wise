@@ -28,8 +28,8 @@ defmodule LocWise.Locations.State do
   @doc false
   def changeset(state, attrs) do
     state
-    |> cast(attrs, [:name, :acronym, :region])
-    |> validate_required([:name, :acronym, :region])
+    |> cast(attrs, [:name, :acronym, :region, :code])
+    |> validate_required([:name, :acronym, :region, :code])
     |> validate_length(:acronym, is: 2)
     |> unique_constraint(:code)
   end

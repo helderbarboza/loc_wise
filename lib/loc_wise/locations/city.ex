@@ -26,8 +26,8 @@ defmodule LocWise.Locations.City do
   @doc false
   def changeset(city, attrs) do
     city
-    |> cast(attrs, [:name, :state_id])
-    |> validate_required([:name, :state_id])
+    |> cast(attrs, [:name, :state_id, :code])
+    |> validate_required([:name, :state_id, :code])
     |> foreign_key_constraint(:state_id)
     |> unique_constraint(:code)
   end
