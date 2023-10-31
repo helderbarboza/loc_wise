@@ -542,9 +542,14 @@ defmodule LocWiseWeb.CoreComponents do
     attr :title, :string, required: true
   end
 
+  attr :class, :string, default: nil
+
   def list(assigns) do
     ~H"""
-    <dl class="mt-14 max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
+    <dl class={[
+      "mt-14 max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700",
+      @class
+    ]}>
       <div
         :for={{item, i} <- Enum.with_index(@item, 1)}
         class={[

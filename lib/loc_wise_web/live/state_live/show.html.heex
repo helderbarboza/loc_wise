@@ -9,12 +9,13 @@
   </:actions>
 </.header>
 
-<.list>
+<.list class="mb-16">
+  <:item title="Code"><%= @state.code %></:item>
   <:item title="Acronym"><%= @state.acronym %></:item>
   <:item title="Region"><%= Phoenix.Naming.humanize(@state.region) %></:item>
 </.list>
 
-<.h2>Population</.h2>
+<.h2>Indicators</.h2>
 <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
   <.live_component
     module={LocWiseWeb.StatCardComponent}

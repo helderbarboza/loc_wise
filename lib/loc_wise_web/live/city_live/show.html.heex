@@ -9,7 +9,8 @@
   </:actions>
 </.header>
 
-<.list>
+<.list class="mb-16">
+  <:item title="Code"><%= @city.code %></:item>
   <:item title="State">
     <.link navigate={~p"/states/#{@city.state}"} class="flex items-center hover:text-primary-700">
       <%= @city.state.name %>
@@ -18,7 +19,7 @@
   </:item>
 </.list>
 
-<.h2>Population</.h2>
+<.h2>Indicators</.h2>
 <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
   <.live_component
     module={LocWiseWeb.StatCardComponent}
