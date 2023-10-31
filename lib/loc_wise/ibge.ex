@@ -1,21 +1,59 @@
 defmodule LocWise.IBGE do
+  alias LocWise.Clients.DadosIBGE
   alias LocWise.Clients.SidraIBGE
+  alias LocWise.SingleStat
 
   def population_by_city(%{code: id} = _city) do
-    {:ok, %{body: items}} = SidraIBGE.get_population_by_city(id)
+    {:ok, %{body: body}} = SidraIBGE.get_population_by_city(id)
 
-    items |> parse_rows() |> hd()
+    body
+    |> parse_sidra()
+    |> build_stat()
   end
 
   def pib_by_city(%{code: id} = _city) do
-    {:ok, %{body: items}} = SidraIBGE.get_pib_by_city(id)
+    {:ok, %{body: body}} = SidraIBGE.get_pib_by_city(id)
 
-    items |> parse_rows() |> hd()
+    body
+    |> parse_sidra()
+    |> build_stat()
   end
 
-  defp parse_rows([header | items]) do
-    Enum.map(items, fn item ->
-      Map.new(item, fn {k, v} -> {header[k], v} end)
-    end)
+  def territorial_area_by_city(%{code: id} = _city) do
+    {:ok, %{body: [item]}} = DadosIBGE.get_mesh_metadata_by_city(id)
+
+    %SingleStat{
+      unit: item["area"]["unidade"]["nome"],
+      year: nil,
+      variable: "Área territorial",
+      value: item["area"]["dimensao"]
+    }
+  end
+
+  def demographic_density_by_city(city) do
+    %{value: population, year: year} = population_by_city(city)
+    %{value: area} = territorial_area_by_city(city)
+
+    densitity = Decimal.div(population, area)
+
+    %SingleStat{
+      unit: "habitantes/quilômetro quadrado",
+      year: year,
+      variable: "Densidade demográfica",
+      value: densitity
+    }
+  end
+
+  defp parse_sidra([header, item]) do
+    Map.new(item, fn {k, v} -> {header[k], v} end)
+  end
+
+  defp build_stat(item) do
+    %SingleStat{
+      unit: Map.fetch!(item, "Unidade de Medida"),
+      year: Map.fetch!(item, "Ano"),
+      variable: Map.fetch!(item, "Variável"),
+      value: Map.fetch!(item, "Valor")
+    }
   end
 end

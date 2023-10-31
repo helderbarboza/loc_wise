@@ -1,5 +1,7 @@
-<.header>
-  <%= @city.name %>
+<.header class="border-b border-gray-200 dark:border-gray-800">
+  <.h1>
+    <%= @city.name %>
+  </.h1>
   <:actions>
     <.link patch={~p"/cities/#{@city}/show/edit"} phx-click={JS.push_focus()}>
       <.button>Edit city</.button>
@@ -15,6 +17,36 @@
     </.link>
   </:item>
 </.list>
+
+<.h2>Population</.h2>
+<div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+  <.live_component
+    module={LocWiseWeb.StatCardComponent}
+    id="population-card"
+    icon_name="users"
+    stat={@population}
+    number_format_opts={[delimiter: " ", separator: ",", precision: 0]}
+  />
+  <.live_component
+    module={LocWiseWeb.StatCardComponent}
+    id="pib-card"
+    icon_name="receipt-2"
+    stat={@pib}
+    number_format_opts={[delimiter: " ", separator: ",", precision: 0]}
+  />
+  <.live_component
+    module={LocWiseWeb.StatCardComponent}
+    id="area-card"
+    icon_name="ruler"
+    stat={@area}
+  />
+  <.live_component
+    module={LocWiseWeb.StatCardComponent}
+    id="demographic-density-card"
+    icon_name="users-group"
+    stat={@demographic_density}
+  />
+</div>
 
 <.back navigate={~p"/cities"}>Back to cities</.back>
 
