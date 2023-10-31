@@ -31,5 +31,6 @@ defmodule LocWise.Locations.State do
     |> cast(attrs, [:name, :acronym, :region])
     |> validate_required([:name, :acronym, :region])
     |> validate_length(:acronym, is: 2)
+    |> unique_constraint(:code)
   end
 end

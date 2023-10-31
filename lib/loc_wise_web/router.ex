@@ -50,6 +50,8 @@ defmodule LocWiseWeb.Router do
 
       live "/cities/:id", CityLive.Show, :show
       live "/cities/:id/show/edit", CityLive.Show, :edit
+
+      live "/import", ImportLive
     end
   end
 

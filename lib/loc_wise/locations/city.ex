@@ -29,5 +29,6 @@ defmodule LocWise.Locations.City do
     |> cast(attrs, [:name, :state_id])
     |> validate_required([:name, :state_id])
     |> foreign_key_constraint(:state_id)
+    |> unique_constraint(:code)
   end
 end
