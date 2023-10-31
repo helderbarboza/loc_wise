@@ -63,7 +63,7 @@ defmodule LocWiseWeb.TableComponent do
                   value={i.field.value}
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   phx-debounce={120}
-                  placeholder="Search"
+                  placeholder="Search by name or code"
                   {i.rest}
                 />
               </div>
@@ -73,7 +73,10 @@ defmodule LocWiseWeb.TableComponent do
       </div>
       <div class="overflow-x-auto">
         <div id={@table_top_id} />
-        <table class="w-[40rem] sm:w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <table
+          :if={@rows.inserts != []}
+          class="w-[40rem] sm:w-full text-sm text-left text-gray-500 dark:text-gray-400"
+        >
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th :for={col <- @col} class="px-4 py-3"><%= col[:label] %></th>
@@ -127,6 +130,16 @@ defmodule LocWiseWeb.TableComponent do
             </tr>
           </tbody>
         </table>
+        <div
+          :if={@rows.inserts == []}
+          class="bg-gray-50 p-16 grid place-content-center justify-items-center"
+        >
+          <.icon set="mdi" name="robot-confused" class="w-32 h-32 m-8 text-gray-500/50" />
+          <p class="text-gray-500 dark:text-gray-400 text-center text-xl tracking-wide">No results</p>
+          <p class="text-gray-500 dark:text-gray-400 text-center">
+            There are no results for this search.
+          </p>
+        </div>
       </div>
       <nav
         :if={@meta.total_count > 0}

@@ -592,12 +592,13 @@ defmodule LocWiseWeb.CoreComponents do
 
       <.icon name="stars" class="w-3.5 h-3.5" />
   """
-  attr(:name, :string, required: true)
-  attr(:rest, :global, include: ~w(rotate inline flip))
+  attr :name, :string, required: true
+  attr :set, :string, default: "tabler"
+  attr :rest, :global, include: ~w(rotate inline flip)
 
   def icon(assigns) do
     ~H"""
-    <iconify-icon icon={"tabler:#{@name}"} {@rest} height="unset" style="display: block">
+    <iconify-icon icon={"#{@set}:#{@name}"} {@rest} height="unset" style="display: block">
     </iconify-icon>
     """
   end
