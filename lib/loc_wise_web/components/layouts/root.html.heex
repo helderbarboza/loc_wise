@@ -15,8 +15,8 @@
   <body class="bg-white antialiased">
     <header>
       <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 border-b text-white fixed left-0 right-0 top-0 z-50">
-        <div class="flex flex-wrap items-center justify-between mx-auto">
-          <div class="flex justify-start items-center">
+        <div class="flex flex-nowrap items-center justify-between mx-auto">
+          <div class="flex justify-start items-center shrink-0">
             <button
               :if={@current_area == :internal}
               type="button"
@@ -37,36 +37,44 @@
               />
             </a>
           </div>
-          <div class="flex items-center lg:order-2">
+          <div class="flex items-center lg:order-2 gap-4 shrink">
             <%= if @current_user do %>
-              <p>
+              <p class="text-sm text-gray-500 truncate dark:text-gray-400 grow">
                 <%= @current_user.email %>
               </p>
               <.link
                 href={~p"/users/settings"}
-                class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+                title="Settings"
+                class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
               >
-                Settings
+                <.icon name="user-cog" class="w-5 h-5 inline-block md:!hidden" />
+                <span class="hidden md:inline-block">Settings</span>
               </.link>
               <.link
                 href={~p"/users/log_out"}
                 method="delete"
-                class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+                title="Log out"
+                class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
               >
-                Log out
+                <.icon name="logout" class="w-5 h-5 inline-block md:!hidden" />
+                <span class="hidden md:inline-block">Log out</span>
               </.link>
             <% else %>
               <.link
                 href={~p"/users/log_in"}
-                class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+                title="Log in"
+                class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
               >
-                Log in
+                <.icon name="login" class="w-5 h-5 inline-block md:!hidden" />
+                <span class="hidden md:inline-block">Log in</span>
               </.link>
               <.link
                 href={~p"/users/register"}
-                class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                title="Get started"
+                class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm p-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
               >
-                Get started
+                <.icon name="rocket" class="w-5 h-5 inline-block md:!hidden" />
+                <span class="hidden md:inline-block">Get started</span>
               </.link>
             <% end %>
           </div>
